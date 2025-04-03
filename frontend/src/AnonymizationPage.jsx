@@ -150,40 +150,8 @@ function AnonymizationPage() {
 
             {columns.length > 0 && (
                 <div>
-                    <h2>Choisir les colonnes</h2>
+                    <h2>Choisissez le type de chaque colonne</h2>
                     <div>
-                        <h3>Colonnes avec valeurs finies</h3>
-                        {columns.map((col) => (
-                            <div key={col}>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        onChange={(e) => handleFiniteValueColumnChange(e, col)}
-                                    />
-                                    {col}
-                                </label>
-                                {finiteValueColumns.includes(col) && (
-                                    <div>
-                                        <h4>Spécifier les généralisations pour les valeurs spécifiques</h4>
-                                        {getUniqueValuesForColumn(col).map((value) => (
-                                            <div key={value}>
-                                                <label>{value}</label>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Généralisation"
-                                                    value={generalizations[col]?.[value] || ""}
-                                                    onChange={(e) => handleGeneralizationChange(e, col, value)}
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-
-                    <div>
-                        <h3>Type de chaque colonne</h3>
                         {columns.map((col) => (
                             <div key={col}>
                                 <label>{col}</label>
@@ -199,7 +167,8 @@ function AnonymizationPage() {
                                     <option value="date_naissance">Date de naissance</option>
                                     <option value="ville">Ville</option>
                                     <option value="adresse">Adresse</option>
-                                    <option value="chiffre">Chiffre</option> {/* Ajout de l'option "Chiffre" */}
+                                    <option value="chiffre">Chiffre</option>
+                                    <option value="carte_bancaire">Numéro de carte bancaire</option> {/* Ajout du type "Carte bancaire" */}
                                     <option value="autre">Autre</option>
                                 </select>
                             </div>

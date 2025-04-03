@@ -42,6 +42,10 @@ def mask_value(value, column_type):
         return value
     elif column_type == 'telephone':
         return value[:2] + "*" * (len(value) - 4) + value[-2:]
+    elif column_type == 'carte_bancaire':  # Nouveau cas pour les numéros de carte bancaire
+        # Masquage du numéro de carte bancaire, sauf les 4 derniers chiffres
+        if len(value) >= 16:  # Assumer que les numéros de carte bancaire ont 16 chiffres
+            return "**** **** **** " + value[-4:]  # Masquer tous les chiffres sauf les 4 derniers
     return value
 
 # Fonction pour généraliser les dates (en ne gardant que l'année)
@@ -137,6 +141,8 @@ def anonymize():
                 df[column] = df[column].apply(lambda x: mask_value(x, column_type))
             elif column_type == 'telephone':
                 # Appliquer un masquage pour les colonnes de type 'telephone'
+                df[column] = df[column].apply(lambda x: mask_value(x, column_type))
+            elif column_type == 'carte_bancaire':  # Appliquer le masquage pour les numéros de carte bancaire
                 df[column] = df[column].apply(lambda x: mask_value(x, column_type))
             elif column_type == 'date_naissance':  # Généralisation des dates
                 df[column] = df[column].apply(generalize_date)
