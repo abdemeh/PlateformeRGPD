@@ -1,6 +1,3 @@
-Voici à nouveau le contenu complet du fichier `README.md` à utiliser à la racine de ton projet **Benchmark** :
-
-```markdown
 # Benchmark - Benchmarking des Techniques d'Anonymisation
 
 Ce projet a pour objectif de comparer et de mesurer l'efficacité de différentes méthodes d'anonymisation de données (masquage, pseudonymisation, généralisation, perturbation, agrégation) en utilisant plusieurs critères de performance. Il permet d'effectuer des benchmarks sur des jeux de données synthétiques générés en 10k, 100k et 1M lignes, et de visualiser les résultats via des graphiques modernes.
