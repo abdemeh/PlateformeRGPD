@@ -11,7 +11,7 @@ np.random.seed(42)
 random.seed(42)
 
 def generate_dataset(n):
-    """Génère un dataset synthétique de n lignes."""
+    #Génère un dataset synthétique de n lignes.
     departments = ['RH', 'Informatique', 'Finance', 'Marketing', 'Production']
     data = {
         "name": [fake.name() for _ in range(n)],
@@ -29,8 +29,15 @@ def generate_dataset(n):
 # Liste des tailles de dataset à générer
 sizes = [10000, 100000, 1000000]
 
+# Dossier où enregistrer les datasets
+datasets_dir = "datasets"
+
+# Création du dossier s'il n'existe pas déjà
+if not os.path.exists(datasets_dir):
+    os.makedirs(datasets_dir)
+
 for size in sizes:
     df = generate_dataset(size)
-    output_path = f"dataset_example_{size}.csv"
+    output_path = os.path.join(datasets_dir, f"dataset_example_{size}.csv")
     df.to_csv(output_path, index=False)
     print(f"Dataset généré avec succès : {os.path.abspath(output_path)}")
