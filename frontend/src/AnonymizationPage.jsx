@@ -196,6 +196,10 @@ function AnonymizationPage() {
                                     <option value="name">Nom complet</option>
                                     <option value="telephone">Numéro de téléphone</option>
                                     <option value="id">ID</option>
+                                    <option value="date_naissance">Date de naissance</option>
+                                    <option value="ville">Ville</option>
+                                    <option value="adresse">Adresse</option>
+                                    <option value="chiffre">Chiffre</option> {/* Ajout de l'option "Chiffre" */}
                                     <option value="autre">Autre</option>
                                 </select>
                             </div>
