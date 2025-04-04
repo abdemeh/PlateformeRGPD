@@ -1,12 +1,67 @@
-# React + Vite
+# Frontend - PlateformeRGPD
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Le frontend de la PlateformeRGPD est une application développée avec React et Vite, offrant une interface utilisateur intuitive pour l'anonymisation des données sensibles contenues dans des fichiers CSV.
 
-Currently, two official plugins are available:
+## Table des matières
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Structure du Projet](#structure-du-projet)
+- [Installation](#installation)
+- [Utilisation](#utilisation)
+- [Fonctionnalités Principales](#fonctionnalités-principales)
 
-## Expanding the ESLint configuration
+## Structure du Projet
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+La structure du dossier frontend est la suivante :
+
+```
+frontend/
+├── src/               # Code source React.
+│   ├── App.jsx        # Composant principal de l'application.
+│   ├── AnonymizationPage.jsx # Page principale pour l'anonymisation.
+│   └── index.css      # Styles CSS globaux.
+├── vite.config.js     # Configuration de Vite.
+├── package.json       # Dépendances et scripts npm.
+└── README.md          # Documentation du frontend.
+```
+
+## Installation
+
+1. **Cloner le dépôt :**
+
+    ```bash
+    git clone https://github.com/abdemeh/PlateformeRGPD.git
+    cd PlateformeRGPD/frontend
+    ```
+
+2. **Installer les dépendances :**
+
+    Exécutez la commande suivante pour installer les dépendances nécessaires :
+
+    ```bash
+    npm install
+    ```
+
+## Utilisation
+
+1. **Lancer le serveur de développement :**
+
+    Depuis le dossier `frontend`, démarrez le serveur avec la commande suivante :
+
+    ```bash
+    npm run dev
+    ```
+
+    Le frontend sera accessible à l'adresse [http://localhost:5173](http://localhost:5173).
+
+2. **Interagir avec la plateforme :**
+
+    - Téléchargez un fichier CSV via l'interface utilisateur.
+    - Configurez les méthodes d'anonymisation souhaitées.
+    - Téléchargez le fichier anonymisé généré.
+
+## Fonctionnalités Principales
+
+- 🌐 **Interface utilisateur intuitive** : Permet de configurer facilement les paramètres d'anonymisation.
+- 📂 **Gestion des fichiers CSV** : Téléchargement et affichage des fichiers.
+- 🔄 **Communication avec le backend** : Envoi des fichiers et réception des résultats via des requêtes API REST.
+- ⚙️ **Extensibilité** : Possibilité d'ajouter de nouvelles pages ou fonctionnalités React.
