@@ -5,8 +5,8 @@ Ce projet a pour objectif de comparer et de mesurer l'efficacité de différente
 ## Table des matières
 
 - [Structure du Projet](#structure-du-projet)
-- [Génération des Datasets](#génération-des-datasets)
 - [Installation](#installation)
+- [Génération des Datasets](#génération-des-datasets)
 - [Utilisation](#utilisation)
 - [Fonctionnalités Principales](#fonctionnalités-principales)
 - [Développement et Extension](#développement-et-extension)
@@ -45,16 +45,6 @@ Benchmark/
 └── anonymized_datasets/             # Datasets anonymisés (générés automatiquement).
 ```
 
-## Génération des Datasets
-
-Pour générer les datasets de 10k, 100k et 1M lignes, exécute simplement :
-
-```bash
-python generate.py
-```
-
-Les fichiers générés seront sauvegardés automatiquement dans le dossier `datasets/`.
-
 ## Installation
 
 1. **Cloner le dépôt :**
@@ -70,6 +60,16 @@ cd Benchmark
 ```bash
 pip install pandas numpy faker psutil python-Levenshtein scipy matplotlib seaborn plotly altair
 ```
+
+## Génération des Datasets
+
+Pour générer les datasets de 10k, 100k et 1M lignes, exécute simplement :
+
+```bash
+python generate.py
+```
+
+Les fichiers générés seront sauvegardés automatiquement dans le dossier `datasets/`.
 
 ## Utilisation
 
