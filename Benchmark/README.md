@@ -45,16 +45,6 @@ Benchmark/
 └── anonymized_datasets/             # Datasets anonymisés (générés automatiquement).
 ```
 
-## Génération des Datasets
-
-Pour générer les datasets de 10k, 100k et 1M lignes, exécute simplement :
-
-```bash
-python generate.py
-```
-
-Les fichiers générés seront sauvegardés automatiquement dans le dossier `datasets/`.
-
 ## Installation
 
 1. **Cloner le dépôt :**
@@ -70,6 +60,16 @@ cd Benchmark
 ```bash
 pip install pandas numpy faker psutil python-Levenshtein scipy matplotlib seaborn plotly altair
 ```
+
+## Génération des Datasets
+
+Pour générer les datasets de 10k, 100k et 1M lignes, exécute simplement :
+
+```bash
+python generate.py
+```
+
+Les fichiers générés seront sauvegardés automatiquement dans le dossier `datasets/`.
 
 ## Utilisation
 
