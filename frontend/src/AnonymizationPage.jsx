@@ -1,260 +1,166 @@
 import React, { useState } from "react";
 
-const typeToMethods = {
-  name: ["masking", "pseudonymization"],
-  email: ["masking", "pseudonymization"],
-  phone: ["masking", "perturbation"],
-  age: ["aggregation", "perturbation"],
-  address: ["masking", "generalization"],
-  country: ["generalization"],
-  city: ["generalization"],
-  date: ["generalization", "perturbation"],
-  id: [],
-  other: ["masking", "pseudonymization", "generalization", "perturbation", "aggregation"]
-};
-
 function AnonymizationPage() {
   const [file, setFile] = useState(null);
   const [columns, setColumns] = useState([]);
-  const [preview, setPreview] = useState([]);
+  const [csvData, setCsvData] = useState([]);
   const [columnTypes, setColumnTypes] = useState({});
-  const [methods, setMethods] = useState({});
-  const [generalizations, setGeneralizations] = useState({});
-  const [excludedCols, setExcludedCols] = useState([]);
-  const [metrics, setMetrics] = useState(null);
-  const [downloadUrl, setDownloadUrl] = useState(null);
-  const [anonymizedPreview, setAnonymizedPreview] = useState([]);
+  const [columnMethods, setColumnMethods] = useState({});
+  const [anonymizedData, setAnonymizedData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleFileUpload = async (e) => {
-    const uploadedFile = e.target.files[0];
-    if (!uploadedFile || uploadedFile.type !== "text/csv") return alert("Fichier CSV requis");
-
-    setFile(uploadedFile);
-    const reader = new FileReader();
-    reader.onload = () => {
-      const text = reader.result;
-      const rows = text.split("\n").map((r) => r.split(","));
-      setColumns(rows[0]);
-      setPreview(rows.slice(1, 6));
-    };
-    reader.readAsText(uploadedFile);
+  const typeToMethods = {
+    name: ["masking", "pseudonymization"],
+    email: ["masking", "pseudonymization"],
+    telephone: ["masking", "perturbation"],
+    carte_bancaire: ["masking"],
+    pays:["generalization"],
+    genre: [],
+    date_naissance: ["generalization", "perturbation"],
+    age: ["generalization", "perturbation"],
+    chiffre: ["perturbation", "generalization", "aggregation"],
+    solde: ["masking", "perturbation", "generalization", "aggregation"],
+    revenu: ["masking", "perturbation", "generalization", "aggregation"],
+    salaire: ["masking", "perturbation", "generalization", "aggregation"],
+    ville: ["generalization"],
+    adresse: ["masking", "generalization"],
+    autre: ["masking", "pseudonymization", "perturbation", "generalization", "aggregation"],
+    id: []
   };
 
-  const handleTypeChange = (col, type) => {
-    setColumnTypes((prev) => ({ ...prev, [col]: type }));
-    if (!typeToMethods[type]?.includes(methods[col])) {
-      setMethods((prev) => ({ ...prev, [col]: "" })); // reset invalid method
-    }
-  };
-
-  const handleMethodChange = (col, method) => {
-    setMethods((prev) => ({ ...prev, [col]: method }));
-  };
-
-  const handleGenChange = (col, original, generalized) => {
-    setGeneralizations((prev) => ({
-      ...prev,
-      [col]: {
-        ...(prev[col] || {}),
-        [original]: generalized
-      }
-    }));
-  };
-
-  const handleExclusionChange = (col, checked) => {
-    if (checked) {
-      setExcludedCols((prev) => [...prev, col]);
+  const handleFileUpload = (event) => {
+    const uploadedFile = event.target.files[0];
+    if (uploadedFile && uploadedFile.type === "text/csv") {
+      setFile(uploadedFile);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const text = reader.result;
+        const rows = text.split("\n").map((row) => row.split(","));
+        const headers = rows[0].map(h => h.trim());
+        setColumns(headers);
+        setCsvData(rows.slice(1));
+      };
+      reader.readAsText(uploadedFile);
     } else {
-      setExcludedCols((prev) => prev.filter((c) => c !== col));
+      alert("Veuillez choisir un fichier CSV");
     }
   };
 
-  const submitAnonymization = async () => {
-    if (!file) return;
+  const handleTypeChange = (e, column) => {
+    const type = e.target.value;
+    setColumnTypes((prev) => ({ ...prev, [column]: type }));
+    // reset method if type changes
+    setColumnMethods((prev) => ({ ...prev, [column]: "" }));
+  };
 
-    const form = new FormData();
-    form.append("file", file);
+  const handleMethodChange = (e, column) => {
+    const method = e.target.value;
+    setColumnMethods((prev) => ({ ...prev, [column]: method }));
+  };
+
+  const handleAnonymization = async () => {
+    if (!file) return alert("Veuillez choisir un fichier CSV");
+
+    const formData = new FormData();
+    formData.append("file", file);
 
     columns.forEach((col) => {
-      if (excludedCols.includes(col)) return;
-      if (methods[col]) form.append(`${col}_method`, methods[col]);
-      if (methods[col] === "generalization" && generalizations[col]) {
-        form.append(`${col}_generalization`, JSON.stringify(generalizations[col]));
-      }
+      const type = columnTypes[col];
+      const method = columnMethods[col];
+      if (type) formData.append(`${col}_type`, type);
+      if (method) formData.append(`${col}_method`, method);
     });
 
     setLoading(true);
-    const res = await fetch("http://localhost:5000/anonymize", {
-      method: "POST",
-      body: form
-    });
-
-    const data = await res.json();
-    setMetrics(data);
-    setDownloadUrl("http://localhost:5000" + data.download_url);
-
-    fetch(data.download_url)
-      .then((res) => res.text())
-      .then((csv) => {
-        const rows = csv.split("\n").map((r) => r.split(","));
-        setAnonymizedPreview(rows.slice(1, 6));
+    setError(null);
+    try {
+      const res = await fetch("http://localhost:5000/anonymize", {
+        method: "POST",
+        body: formData,
       });
 
-    setLoading(false);
+      if (!res.ok) throw new Error("Erreur lors de l’anonymisation");
+
+      const text = await res.text();
+      setAnonymizedData(text);
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Erreur inconnue");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const downloadCSV = () => {
+    const blob = new Blob([anonymizedData], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "anonymized_data.csv";
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
-    <div className="p-4 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Anonymisation de Données CSV</h1>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Plateforme d'Anonymisation</h1>
 
-      <input type="file" accept=".csv" onChange={handleFileUpload} className="mb-4" />
+      <input type="file" accept=".csv" onChange={handleFileUpload} className="mb-6" />
 
       {columns.length > 0 && (
-        <div>
-          <h2 className="text-xl mb-2">Configuration par colonne :</h2>
-          {columns.map((col) => {
-            const type = columnTypes[col] || "";
-            const availableMethods = typeToMethods[type] || [];
+        <div className="space-y-4">
+          {columns.map((col) => (
+            <div key={col} className="border rounded p-4">
+              <h3 className="font-semibold">{col}</h3>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-2">
+                <select
+                  value={columnTypes[col] || ""}
+                  onChange={(e) => handleTypeChange(e, col)}
+                  className="border p-1 rounded"
+                >
+                  <option value="">Sélectionner le type</option>
+                  {Object.keys(typeToMethods).map((type) => (
+                    <option key={type} value={type}>{type}</option>
+                  ))}
+                </select>
 
-            return (
-              <div key={col} className="mb-4 border p-2 rounded">
-                <label className="block font-semibold">{col}</label>
-
-                <label className="block text-sm mt-1">
-                  <input
-                    type="checkbox"
-                    checked={excludedCols.includes(col)}
-                    onChange={(e) => handleExclusionChange(col, e.target.checked)}
-                  />{" "}
-                  Ne pas anonymiser cette colonne
-                </label>
-
-                {!excludedCols.includes(col) && (
-                  <>
-                    <label className="block mt-2 text-sm">Type de donnée :</label>
-                    <select
-                      className="border rounded p-1 w-full"
-                      value={columnTypes[col] || ""}
-                      onChange={(e) => handleTypeChange(col, e.target.value)}
-                    >
-                      <option value="">-- Sélectionner un type --</option>
-                      {Object.keys(typeToMethods).map((typeOption) => (
-                        <option key={typeOption} value={typeOption}>
-                          {typeOption}
-                        </option>
-                      ))}
-                    </select>
-
-                    {type && availableMethods.length > 0 && (
-                      <>
-                        <label className="block mt-2 text-sm">Méthode d’anonymisation :</label>
-                        <select
-                          className="border rounded p-1 w-full"
-                          value={methods[col] || ""}
-                          onChange={(e) => handleMethodChange(col, e.target.value)}
-                        >
-                          <option value="">-- Aucune --</option>
-                          {availableMethods.map((m) => (
-                            <option key={m} value={m}>
-                              {m}
-                            </option>
-                          ))}
-                        </select>
-                      </>
-                    )}
-
-                    {methods[col] === "generalization" &&
-                    !(["city", "age", "date", "birthdate", "revenue", "income", "salaire"].includes(columnTypes[col])) && (
-                        <div className="mt-2">
-                        <label className="text-sm">Règles de généralisation :</label>
-                        {Array.from(new Set(preview.map(r => r[columns.indexOf(col)]))).map(value => (
-                            <div key={value} className="flex gap-2 items-center my-1">
-                            <span className="text-sm w-32">{value}</span>
-                            <input
-                                type="text"
-                                placeholder="Catégorie..."
-                                className="border rounded px-2 py-1 flex-1"
-                                value={generalizations[col]?.[value] || ""}
-                                onChange={(e) => handleGenChange(col, value, e.target.value)}
-                            />
-                            </div>
-                        ))}
-                        </div>
-                    )}
-                    
-                  </>
+                {columnTypes[col] && (
+                  <select
+                    value={columnMethods[col] || ""}
+                    onChange={(e) => handleMethodChange(e, col)}
+                    className="border p-1 rounded"
+                  >
+                    <option value="">Méthode à appliquer</option>
+                    {typeToMethods[columnTypes[col]].map((method) => (
+                      <option key={method} value={method}>{method}</option>
+                    ))}
+                  </select>
                 )}
               </div>
-            );
-          })}
-
-          <button
-            onClick={submitAnonymization}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            disabled={loading}
-          >
-            {loading ? "Anonymisation en cours..." : "Lancer l'anonymisation"}
-          </button>
+            </div>
+          ))}
         </div>
       )}
 
-      {metrics && (
-        <div className="mt-6 bg-gray-100 p-4 rounded">
-          <h2 className="text-xl font-semibold mb-2">📊 Métriques RGPD :</h2>
-          <ul className="list-disc ml-5 text-sm">
-            <li>⏱️ Temps de traitement : {metrics.processing_time} secondes</li>
-            <li>🧠 Risque de ré-identification : {metrics.estimated_reidentification_risk}</li>
-            <li>📊 Fidélité des données : {metrics.data_fidelity_score}%</li>
-            <li>✅ Conformité RGPD : {metrics.gdpr_compliance}</li>
-          </ul>
-        </div>
-      )}
+      <button
+        onClick={handleAnonymization}
+        disabled={loading}
+        className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        {loading ? "Traitement en cours..." : "Lancer l'anonymisation"}
+      </button>
 
-      {preview.length > 0 && anonymizedPreview.length > 0 && (
-        <div className="mt-6 grid grid-cols-2 gap-4">
-          <div>
-            <h3 className="font-semibold">🕵️‍♀️ Données originales (extrait)</h3>
-            <table className="text-xs border border-collapse w-full mt-1">
-              <tbody>
-                {preview.map((row, i) => (
-                  <tr key={i}>
-                    {row.map((cell, j) => (
-                      <td key={j} className="border p-1">{cell}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <h3 className="font-semibold">🛡️ Données anonymisées (extrait)</h3>
-            <table className="text-xs border border-collapse w-full mt-1">
-              <tbody>
-                {anonymizedPreview.map((row, i) => (
-                  <tr key={i}>
-                    {row.map((cell, j) => (
-                      <td key={j} className="border p-1">{cell}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
+      {error && <p className="text-red-500 mt-4">{error}</p>}
 
-      {downloadUrl && (
+      {anonymizedData && (
         <div className="mt-6">
-          <h2 className="text-lg font-semibold mb-2">📥 Télécharger le fichier :</h2>
-          <a
-            href={downloadUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 inline-block"
+          <button
+            onClick={downloadCSV}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
           >
-            Télécharger le CSV anonymisé
-          </a>
+            Télécharger le fichier anonymisé
+          </button>
         </div>
       )}
     </div>
