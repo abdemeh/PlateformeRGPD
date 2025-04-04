@@ -27,7 +27,7 @@ def plot_comparison(ax, metric_name, values, methods, colors):
 
 def plot_all_benchmarks(benchmark_results):
     # On filtre pour exclure la métrique "Scalability"
-    metrics = [m for m in list(next(iter(benchmark_results.values())).keys()) if m != "Scalability"]
+    metrics = [m for m in list(next(iter(benchmark_results.values())).keys()) if m not in ["Scalability", "Reversibility (%)"]]
     num_metrics = len(metrics)
     methods = list(benchmark_results.keys())
     

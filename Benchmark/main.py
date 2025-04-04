@@ -136,8 +136,10 @@ for method, metrics in benchmark_summary.items():
     for k, v in metrics.items():
         print(f"  {k}: {v}")
 
+# Export benchmark results to JSON
+save_benchmark_summary_json(benchmark_summary)
+
 # Visualize benchmark results
 plot_all_benchmarks(benchmark_summary)
 
-# Export benchmark results to JSON
-save_benchmark_summary_json(benchmark_summary)
+
