@@ -1,5 +1,3 @@
-
-# main.py
 import os
 import time
 import psutil
@@ -22,6 +20,7 @@ from utils.visualization import plot_all_benchmarks
 DATASET_DIR = "datasets"
 dataset_files = [f for f in os.listdir(DATASET_DIR) if f.endswith(".csv")]
 
+# Create output folder for anonymized files
 output_folder = "anonymized_datasets"
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
@@ -58,11 +57,11 @@ def run_benchmarks(method_name, anonymize_func, df):
     
     # Measure execution time and memory usage
     process = psutil.Process(os.getpid())
-    mem_before = process.memory_info().rss / (1024*1024)
+    mem_before = process.memory_info().rss / (1024 * 1024)
     start_time = time.perf_counter()
     new_df = anonymize_func(df)
     end_time = time.perf_counter()
-    mem_after = process.memory_info().rss / (1024*1024)
+    mem_after = process.memory_info().rss / (1024 * 1024)
     exec_time = end_time - start_time
     mem_used = mem_after - mem_before
     
@@ -84,7 +83,8 @@ def run_benchmarks(method_name, anonymize_func, df):
     
     # Calculate benchmark criteria
     info_loss = compute_information_loss(orig, new) if orig is not None else None
-    rev = reversibility.compute_reversibility(orig, new)
+    # Appel de la nouvelle fonction de réversibilité (qui retourne un tuple)
+    perc_rev, avg_sim = reversibility.compute_reversibility(orig, new, threshold=0.7) if orig is not None else (None, None)
     reid_risk = re_identification.compute_reidentification_risk(new) if new is not None else None
     ent_before = entropy_diversity.compute_entropy(orig) if orig is not None else None
     ent_after = entropy_diversity.compute_entropy(new) if new is not None else None
@@ -97,7 +97,8 @@ def run_benchmarks(method_name, anonymize_func, df):
         "Execution Time (s)": round(exec_time, 4),
         "Memory Used (MiB)": round(mem_used, 4),
         "Avg Information Loss": round(info_loss, 2) if info_loss is not None else None,
-        "Reversibility (%)": rev * 100,
+        "Reversibility (%)": perc_rev,
+        "Average Similarity (%)": round(avg_sim, 2) if avg_sim is not None else None,
         "Re-ID Risk (%)": round(reid_risk, 2) if reid_risk is not None else None,
         "Entropy Before": round(ent_before, 4) if ent_before is not None else None,
         "Entropy After": round(ent_after, 4) if ent_after is not None else None,
@@ -135,10 +136,10 @@ for method, metrics in benchmark_summary.items():
     for k, v in metrics.items():
         print(f"  {k}: {v}")
 
-# Example visualization: compare Execution Time across methods.
-methods_list = list(benchmark_summary.keys())
-execution_times = [benchmark_summary[m]["Execution Time (s)"] for m in methods_list]
-
-# Displaying and saving data
-plot_all_benchmarks(benchmark_summary)
+# Export benchmark results to JSON
 save_benchmark_summary_json(benchmark_summary)
+
+# Visualize benchmark results
+plot_all_benchmarks(benchmark_summary)
+
+
