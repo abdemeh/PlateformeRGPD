@@ -1,6 +1,6 @@
 # Frontend - PlateformeRGPD
 
-Le frontend de la PlateformeRGPD est une application développée avec React et Vite, offrant une interface utilisateur intuitive pour l'anonymisation des données sensibles contenues dans des fichiers CSV.
+Le frontend de la PlateformeRGPD est une application développée avec React et Vite. Il offre une interface utilisateur intuitive pour l'anonymisation des données sensibles contenues dans des fichiers CSV.
 
 ## Table des matières
 
@@ -35,7 +35,7 @@ frontend/
 
 2. **Installer les dépendances :**
 
-    Exécutez la commande suivante pour installer les dépendances nécessaires :
+    Exécuter la commande suivante pour installer les dépendances nécessaires :
 
     ```bash
     npm install
@@ -45,19 +45,19 @@ frontend/
 
 1. **Lancer le serveur de développement :**
 
-    Depuis le dossier `frontend`, démarrez le serveur avec la commande suivante :
+    Depuis le dossier `frontend`, démarrer le serveur avec la commande suivante :
 
     ```bash
     npm run dev
     ```
 
-    Le frontend sera accessible à l'adresse [http://localhost:5173](http://localhost:5173).
+    Le frontend est accessible à l'adresse [http://localhost:5173](http://localhost:5173).
 
 2. **Interagir avec la plateforme :**
 
-    - Téléchargez un fichier CSV via l'interface utilisateur.
-    - Configurez les méthodes d'anonymisation souhaitées.
-    - Téléchargez le fichier anonymisé généré.
+    - Télécharger un fichier CSV via l'interface utilisateur.
+    - Configurer les méthodes d'anonymisation souhaitées.
+    - Télécharger le fichier anonymisé généré.
 
 ## Fonctionnalités Principales
 

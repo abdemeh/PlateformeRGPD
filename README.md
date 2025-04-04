@@ -1,6 +1,6 @@
 # PlateformeRGPD - Plateforme d'Anonymisation de Données
 
-Ce projet a pour objectif de fournir une plateforme permettant d'anonymiser des données sensibles contenues dans des fichiers CSV. Il propose plusieurs méthodes d'anonymisation, telles que le masquage, la pseudonymisation, la généralisation, la perturbation et l'agrégation.
+Ce projet fournit une plateforme permettant d'anonymiser des données sensibles contenues dans des fichiers CSV. Plusieurs méthodes d'anonymisation sont disponibles, telles que le masquage, la pseudonymisation, la généralisation, la perturbation et l'agrégation.
 
 ## Table des matières
 
@@ -40,7 +40,7 @@ PlateformeRGPD/
 
 2. **Configurer le backend :**
 
-    Accédez au dossier `backend` et installez les dépendances Python nécessaires :
+    Accéder au dossier `backend` et installer les dépendances Python nécessaires :
 
     ```bash
     cd backend
@@ -49,7 +49,7 @@ PlateformeRGPD/
 
 3. **Configurer le frontend :**
 
-    Accédez au dossier `frontend` et installez les dépendances npm :
+    Accéder au dossier `frontend` et installer les dépendances npm :
 
     ```bash
     cd frontend
@@ -60,29 +60,29 @@ PlateformeRGPD/
 
 1. **Lancer le backend :**
 
-    Depuis le dossier `backend`, démarrez le serveur Flask :
+    Depuis le dossier `backend`, démarrer le serveur Flask :
 
     ```bash
     python app.py
     ```
 
-    Le backend sera accessible à l'adresse [http://localhost:5000](http://localhost:5000).
+    Le backend est accessible à l'adresse [http://localhost:5000](http://localhost:5000).
 
 2. **Lancer le frontend :**
 
-    Depuis le dossier `frontend`, démarrez le serveur de développement React :
+    Depuis le dossier `frontend`, démarrer le serveur de développement React :
 
     ```bash
     npm run dev
     ```
 
-    Le frontend sera accessible à l'adresse [http://localhost:5173](http://localhost:5173).
+    Le frontend est accessible à l'adresse [http://localhost:5173](http://localhost:5173).
 
 3. **Utiliser la plateforme :**
 
-    - Téléchargez un fichier CSV via l'interface utilisateur.
-    - Configurez les méthodes d'anonymisation souhaitées.
-    - Téléchargez le fichier anonymisé généré.
+    - Télécharger un fichier CSV via l'interface utilisateur.
+    - Configurer les méthodes d'anonymisation souhaitées.
+    - Télécharger le fichier anonymisé généré.
 
 ## Fonctionnalités Principales
 
@@ -93,6 +93,6 @@ PlateformeRGPD/
   - Généralisation
   - Perturbation
   - Agrégation
-- 🌐 **Interface utilisateur intuitive** : Permet de configurer facilement les paramètres d'anonymisation.
+- 🌐 **Interface utilisateur intuitive** : Configuration facile des paramètres d'anonymisation.
 - 🔄 **Communication backend-frontend** : Utilisation d'API REST pour transmettre les fichiers et les résultats.
 - ⚙️ **Architecture modulaire** : Séparation claire entre le backend (logique métier) et le frontend (interface utilisateur).

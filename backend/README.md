@@ -1,6 +1,6 @@
 # Backend - PlateformeRGPD
 
-Le backend de la PlateformeRGPD est une API développée avec Flask, permettant de gérer l'anonymisation des données sensibles contenues dans des fichiers CSV.
+Le backend de la PlateformeRGPD est une API développée avec Flask. Elle permet de gérer l'anonymisation des données sensibles contenues dans des fichiers CSV.
 
 ## Table des matières
 
@@ -23,16 +23,14 @@ backend/
 
 ## Installation
 
-1. **Cloner le dépôt :**
+1. Cloner le dépôt :
 
     ```bash
     git clone https://github.com/abdemeh/PlateformeRGPD.git
     cd PlateformeRGPD/backend
     ```
 
-2. **Installer les dépendances :**
-
-    Exécutez la commande suivante pour installer Flask et les autres dépendances nécessaires :
+2. Installer les dépendances nécessaires :
 
     ```bash
     pip install flask flask-cors pandas
@@ -40,28 +38,26 @@ backend/
 
 ## Utilisation
 
-1. **Lancer le serveur Flask :**
-
-    Depuis le dossier `backend`, démarrez le serveur avec la commande suivante :
+1. Lancer le serveur Flask :
 
     ```bash
     python app.py
     ```
 
-    Le backend sera accessible à l'adresse [http://localhost:5000](http://localhost:5000).
+    Le backend est accessible à l'adresse suivante : [http://localhost:5000](http://localhost:5000).
 
-2. **Tester l'API :**
+2. Tester l'API :
 
-    Vous pouvez utiliser des outils comme [Postman](https://www.postman.com/) ou l'extension **REST Client** de Visual Studio Code pour tester les endpoints de l'API.
+    Utiliser des outils comme [Postman](https://www.postman.com/) ou l'extension **REST Client** de Visual Studio Code pour envoyer des requêtes aux endpoints de l'API.
 
 ## Fonctionnalités Principales
 
 - 📂 **Gestion des fichiers CSV** : Téléchargement et traitement des fichiers.
-- 🔐 **Anonymisation des données** : Application de différentes méthodes d'anonymisation, telles que :
+- 🔐 **Anonymisation des données** : Application de différentes méthodes d'anonymisation, notamment :
   - Masquage
   - Pseudonymisation
   - Généralisation
   - Perturbation
   - Agrégation
 - 🌐 **API REST** : Communication avec le frontend pour transmettre les fichiers et les résultats.
-- ⚙️ **Extensibilité** : Possibilité d'ajouter de nouvelles méthodes d'anonymisation.
+- ⚙️ **Extensibilité** : Ajout possible de nouvelles méthodes d'anonymisation.
