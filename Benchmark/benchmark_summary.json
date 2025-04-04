@@ -1,0 +1,72 @@
+{
+    "masquage": {
+        "Execution Time (s)": 0.0053,
+        "Memory Used (MiB)": 1.5586,
+        "Avg Information Loss": 0.74,
+        "Reversibility (%)": 0.0,
+        "Average Similarity (%)": 26.43,
+        "Re-ID Risk (%)": 36.33,
+        "Entropy Before": 9.2103,
+        "Entropy After": 8.6432,
+        "Unique Values Before": 10000,
+        "Unique Values After": 6367,
+        "Data Precision (%)": 0.0,
+        "Scalability": "Tested on 10000 rows"
+    },
+    "pseudonymisation": {
+        "Execution Time (s)": 0.0079,
+        "Memory Used (MiB)": 0.5234,
+        "Avg Information Loss": 0.92,
+        "Reversibility (%)": 0.0,
+        "Average Similarity (%)": 7.78,
+        "Re-ID Risk (%)": 39.19,
+        "Entropy Before": 9.1775,
+        "Entropy After": 8.5888,
+        "Unique Values Before": 9765,
+        "Unique Values After": 6081,
+        "Data Precision (%)": 0.0,
+        "Scalability": "Tested on 10000 rows"
+    },
+    "generalisation": {
+        "Execution Time (s)": 0.0057,
+        "Memory Used (MiB)": 0.0,
+        "Avg Information Loss": 0.61,
+        "Reversibility (%)": 0.0,
+        "Average Similarity (%)": 38.95,
+        "Re-ID Risk (%)": 99.94,
+        "Entropy Before": 8.8534,
+        "Entropy After": 1.6621,
+        "Unique Values Before": 7602,
+        "Unique Values After": 6,
+        "Data Precision (%)": 0.0,
+        "Scalability": "Tested on 10000 rows"
+    },
+    "perturbation": {
+        "Execution Time (s)": 0.0011,
+        "Memory Used (MiB)": 0.0078,
+        "Avg Information Loss": 0.05,
+        "Reversibility (%)": 0.0,
+        "Average Similarity (%)": 21.93,
+        "Re-ID Risk (%)": 0.0,
+        "Entropy Before": 9.2078,
+        "Entropy After": 9.2103,
+        "Unique Values Before": 9982,
+        "Unique Values After": 10000,
+        "Data Precision (%)": 93.98055696206804,
+        "Scalability": "Tested on 10000 rows"
+    },
+    "aggregation": {
+        "Execution Time (s)": 0.0014,
+        "Memory Used (MiB)": 0.0586,
+        "Avg Information Loss": 0.46,
+        "Reversibility (%)": 0.0,
+        "Average Similarity (%)": 7.17,
+        "Re-ID Risk (%)": 99.95,
+        "Entropy Before": 9.2078,
+        "Entropy After": 1.0629,
+        "Unique Values Before": 9982,
+        "Unique Values After": 5,
+        "Data Precision (%)": 91.18878127283689,
+        "Scalability": "Tested on 10000 rows"
+    }
+}
