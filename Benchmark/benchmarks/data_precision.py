@@ -16,11 +16,11 @@ def compute_data_precision(original_series, anonymized_series):
     if is_numeric:
         try:
             correlation = np.corrcoef(original_series, anonymized_series)[0, 1]
-            return abs(correlation) * 100
+            return abs(correlation)
         except Exception as e:
             print(f"Erreur de corrélation : {e}")
             return 0.0
     else:
         exact_matches = (original_series == anonymized_series).sum()
         total = len(original_series)
-        return (exact_matches / total) * 100
+        return (exact_matches / total)
