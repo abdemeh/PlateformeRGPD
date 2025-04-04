@@ -64,7 +64,7 @@ def generalize_generic_date(value):
     try:
         dt = pd.to_datetime(value)
         # Conserver l'année et masquer mois et jour
-        return f"{dt.year}/--/--"
+        return f"{dt.year}"
     except Exception:
         return value
 
@@ -99,16 +99,23 @@ def generalize_date_interval(value, bin_size=5):
         year = dt.year
         lower = (year // bin_size) * bin_size
         upper = lower + bin_size
-        return f"[{lower} / {upper}]"
+        return f"{lower}-{upper}"
     except Exception as e:
         return value
 
-def generalize_balance(value, bin_size=4000):
+def generalize_balance(value):
     try:
-        num_value = float(value)
-        lower = (int(num_value) // bin_size) * bin_size
-        upper = lower + bin_size
-        return f"{lower}/{upper}"
+        num_value = int(float(value))  # Convertir en entier
+
+        # Générer une réduction aléatoire jusqu'à 15% pour lower
+        lower_margin = random.uniform(0, 0.15) * num_value
+        lower = int(num_value - lower_margin)  # Peut être plus bas que 15%
+
+        # Générer une augmentation aléatoire jusqu'à 15% pour upper
+        upper_margin = random.uniform(0, 0.15) * num_value
+        upper = int(num_value + upper_margin)  # Peut être inférieur à +15%
+
+        return f"{lower}-{upper}"
     except Exception:
         return value
 
@@ -179,15 +186,15 @@ def anonymize():
             elif column_type == 'email':
                 # Appliquer un masquage pour les colonnes de type 'email'
                 df[column] = df[column].apply(lambda x: mask_value(x, column_type))
-            elif column_type ==  'telephone':
+            elif column_type == 'telephone':
                 # Appliquer un masquage pour les colonnes de type 'telephone'
                 df[column] = df[column].apply(lambda x: mask_value(x, column_type))
             elif column_type == 'carte_bancaire':  # Appliquer le masquage pour les numéros de carte bancaire
                 df[column] = df[column].apply(lambda x: mask_value(x, column_type))
             elif column_type == 'date_naissance':  # Généralisation en intervalles pour la date de naissance
                 df[column] = df[column].apply(generalize_date_interval)
-            elif column_type == 'chiffre':  # Généralisation en intervalles pour les valeurs numériques (âge, chiffres)
-                df[column] = df[column].apply(generalize_numeric_interval)
+            elif column_type == 'chiffre':
+                df[column] = df[column].apply(lambda x: apply_random_variation(x, variation_percentage))
             elif column_type == 'solde':  # Pour les soldes bancaires
                 df[column] = df[column].apply(generalize_balance)
             elif column_type == 'date':
