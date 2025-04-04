@@ -1,78 +1,82 @@
 import os
-import hashlib
 import pandas as pd
 from flask import Flask, request, send_file, jsonify
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
+from anonymizers import anonymize_column
 
 app = Flask(__name__)
+CORS(app)
 
-# Appliquer CORS à toutes les routes pour permettre l'accès depuis d'autres origines
-CORS(app, resources={r"/*": {"origins": "*"}})
-
-# Dossier où les fichiers téléchargés seront enregistrés
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'csv'}
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Fonction de pseudonymisation : création d'un hachage SHA256 de la valeur
-def pseudonymize(value):
-    value = str(value)
-    return hashlib.sha256(value.encode('utf-8')).hexdigest()[:16]  # Prendre les 16 premiers caractères du hachage
 
-# Fonction de masquage
-def mask_value(value, column_name):
-    value = str(value)
-    if column_name.lower() == 'name':
-        parts = value.split()
-        if len(parts) > 1:
-            first_name_initial = parts[0][0]  # Première lettre du prénom
-            last_name_initial = parts[1][0]   # Première lettre du nom
-            masked_first_name = first_name_initial + "*" * (len(parts[0]) - 1)
-            masked_last_name = last_name_initial + "*" * (len(parts[1]) - 1)
-            masked_name = f"{masked_first_name} {masked_last_name}"
-            return masked_name
-        return value
-    elif column_name.lower() == 'email':
-        if '@' in value:
-            local_part, domain = value.split('@', 1)
-            masked_local = local_part[0] + "*" * (len(local_part) - 1)
-            return f"{masked_local}@{domain}"
-        return value
-    elif column_name.lower() == 'phone':
-        return value[:2] + "*" * (len(value) - 4) + value[-2:]
-    return value
-
-# Vérifier si l'extension du fichier est autorisée
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+import time
 
 @app.route('/anonymize', methods=['POST'])
 def anonymize():
     if 'file' not in request.files:
         return jsonify({'error': 'Aucun fichier trouvé'}), 400
-    file = request.files['file']
 
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(file_path)
-    else:
+    file = request.files['file']
+    if not allowed_file(file.filename):
         return jsonify({'error': 'Le fichier doit être au format CSV'}), 400
 
+    filename = secure_filename(file.filename)
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    file.save(file_path)
+
     df = pd.read_csv(file_path)
+    original_df = df.copy()
 
-    if 'id' in df.columns:
-        df.drop('id', axis=1, inplace=True)
+    start = time.time()
 
+    # Anonymisation dynamique
+    applied_methods = {}
     for column in df.columns:
-        if column.lower() in ['name', 'email', 'phone']:
-            df[column] = df[column].apply(lambda x: mask_value(x, column))
+        method = request.form.get(f"{column}_method")
+        generalization_data = request.form.get(f"{column}_generalization")
 
-    output_path = os.path.join(app.config['UPLOAD_FOLDER'], f'anonymized_{filename}')
+        if method:
+            applied_methods[column] = method
+            df = anonymize_column(df, column, method, generalization_data)
+
+    end = time.time()
+    processing_time = round(end - start, 3)
+
+    # ⚖️ Calcul des métriques
+    total_cols = len(df.columns)
+    modified_cols = len(applied_methods)
+    fidelity_score = round((total_cols - modified_cols) / total_cols * 100, 2)
+    reidentification_risk = round(1 - (modified_cols / total_cols), 2)
+    gdpr_compliance = "Oui" if modified_cols > 0 else "Non"
+
+    # Sauvegarde du fichier anonymisé
+    output_path = os.path.join(app.config['UPLOAD_FOLDER'], f"anonymized_{filename}")
     df.to_csv(output_path, index=False)
 
-    return send_file(output_path, as_attachment=True, download_name=f'anonymized_{filename}', mimetype='text/csv')
+    return jsonify({
+        "processing_time": processing_time,
+        "estimated_reidentification_risk": reidentification_risk,
+        "data_fidelity_score": fidelity_score,
+        "gdpr_compliance": gdpr_compliance,
+        "download_url": f"/download/{os.path.basename(output_path)}"
+    })
+
+@app.route('/download/<filename>', methods=['GET'])
+def download_file(filename):
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    if os.path.exists(file_path):
+        return send_file(file_path, as_attachment=True, download_name=filename, mimetype='text/csv')
+    return jsonify({"error": "Fichier non trouvé"}), 404
+
 
 if __name__ == '__main__':
     app.run(debug=True)
