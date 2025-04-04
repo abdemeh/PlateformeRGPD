@@ -62,7 +62,7 @@ Les fichiers générés seront sauvegardés automatiquement dans le dossier `dat
 ```bash
 git clone https://github.com/abdemeh/PlateformeRGPD.git
 cd PlateformeRGPD
-mv PlateformeRGPD Benchmark  # (optionnel) renommer le dossier
+cd Benchmark
 ```
 
 2. **Installer les dépendances :**
@@ -73,20 +73,26 @@ pip install pandas numpy faker psutil python-Levenshtein scipy matplotlib seabor
 
 ## Utilisation
 
-1. **Exécution du benchmark principal :**
+1. **Géneration des datasets :**
+
+```bash
+python generate.py
+```
+
+2. **Exécution du benchmark principal :**
 
 ```bash
 python main.py
 ```
 
-2. **Choisissez un dataset :**  
+3. **Choisissez un dataset :**  
    Le script affichera la liste des fichiers `.csv` disponibles dans `datasets/`.
 
-3. **Lancement de l'anonymisation + benchmark :**  
+4. **Lancement de l'anonymisation + benchmark :**  
    Pour chaque méthode, un nouveau fichier anonymisé est sauvegardé dans `anonymized_datasets/`.  
    Des métriques sont calculées automatiquement, puis affichées dans des graphiques.
 
-4. **Export JSON :**  
+5. **Export JSON :**  
    Un fichier JSON est généré pour résumer tous les résultats de benchmark.
 
 ## Fonctionnalités Principales
