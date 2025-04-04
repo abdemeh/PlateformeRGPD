@@ -5,8 +5,8 @@ Ce projet a pour objectif de comparer et de mesurer l'efficacité de différente
 ## Table des matières
 
 - [Structure du Projet](#structure-du-projet)
-- [Génération des Datasets](#génération-des-datasets)
 - [Installation](#installation)
+- [Génération des Datasets](#génération-des-datasets)
 - [Utilisation](#utilisation)
 - [Fonctionnalités Principales](#fonctionnalités-principales)
 - [Développement et Extension](#développement-et-extension)
