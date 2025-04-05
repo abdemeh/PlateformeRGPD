@@ -44,7 +44,7 @@ PlateformeRGPD/
 
     ```bash
     cd backend
-    pip install -r requirements.txt
+    pip install flask flask_cors
     ```
 
 3. **Configurer le frontend :**
