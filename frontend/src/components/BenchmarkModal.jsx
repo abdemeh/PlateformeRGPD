@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const benchmarks = [
   {
@@ -23,8 +23,16 @@ const benchmarks = [
 
 export default function BenchmarkModal({ onClose }) {
   const [index, setIndex] = useState(0);
+  const [fade, setFade] = useState(true);
 
-  const goTo = (i) => setIndex(i);
+  const goTo = (i) => {
+    if (i === index) return;
+    setFade(false);
+    setTimeout(() => {
+      setIndex(i);
+      setFade(true);
+    }, 200); // match duration of fade-out
+  };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -35,8 +43,8 @@ export default function BenchmarkModal({ onClose }) {
         {/* Header */}
         <h2 className="text-3xl font-bold text-center mb-4">📊 Résultats de Benchmarking</h2>
 
-        {/* Slide content */}
-        <div className="transition-all duration-500 ease-in-out">
+        {/* Slide content*/}
+        <div className={`transition-opacity duration-200 ${fade ? "opacity-100" : "opacity-0"}`}>
           <h3 className={`text-xl font-semibold mb-2 text-center ${benchmarks[index].color}`}>
             {benchmarks[index].title}
           </h3>
@@ -68,10 +76,7 @@ export default function BenchmarkModal({ onClose }) {
 
         {/* Close button */}
         <div className="flex justify-center mt-8">
-          <button
-            onClick={onClose}
-            className="px-6 py-2"
-          >
+          <button onClick={onClose} className="px-6 py-2">
             Fermer
           </button>
         </div>
