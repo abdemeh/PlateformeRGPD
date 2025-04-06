@@ -14,19 +14,47 @@ Ce projet fournit une plateforme permettant d'anonymiser des données sensibles 
 La structure du dossier du projet est la suivante :
 
 ```
-PlateformeRGPD/
-├── backend/               # Backend de l'application (API Flask).
-│   ├── app.py             # Serveur Flask pour gérer l'anonymisation.
-│   ├── uploads/           # Dossier pour les fichiers téléchargés.
-│   └── .idea/             # Fichiers de configuration de l'IDE.
-├── frontend/              # Frontend de l'application (React + Vite).
-│   ├── src/               # Code source React.
-│   │   ├── App.jsx        # Composant principal de l'application.
-│   │   ├── AnonymizationPage.jsx # Page principale pour l'anonymisation.
-│   │   └── index.css      # Styles CSS globaux.
-│   ├── vite.config.js     # Configuration de Vite.
-│   └── package.json       # Dépendances et scripts npm.
-└── README.md              # Documentation du projet.
+PLATFORMERGD/
+│
+├── backend/                         # Backend Python (API Flask)
+│   ├── app.py                       # Point d’entrée de l’API Flask
+│   ├── uploads/                     # Fichiers CSV uploadés par l'utilisateur
+│   ├── Benchmark/                   # Système de benchmark RGPD
+│   │   ├── benchmarks/              # Modules pour évaluer les méthodes (temps, mémoire, précision, etc.)
+│   │   │   └── *.py
+│   │   ├── methods/                 # Implémentation des méthodes d’anonymisation
+│   │   │   └── *.py
+│   │   ├── utils/                   # Fonctions utilitaires (chargement, export, visualisation)
+│   │   │   └── *.py
+│   ├── generate.py                  # Générateur de dataset ou exécution automatique
+│   ├── benchmark_summary.json       # Résultats des benchmarks
+│   ├── Benchmark Report.docx        # Rapport documentaire
+│   └── README.md                    # Explication du backend
+│
+├── frontend/                        # Frontend React (SPA)
+│   ├── public/                      # Dossier public (images, polices, etc.)
+│   │   ├── fonts/
+│   │   └── images/
+│   ├── src/                         # Source principale React
+│   │   ├── components/              # Composants réutilisables
+│   │   │   ├── Header.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   └── BenchmarkModal.jsx
+│   │   ├── App.jsx                  # Routing principal
+│   │   ├── main.jsx                 # Point d’entrée React
+│   │   ├── WelcomePage.jsx          # Page d’accueil de la plateforme
+│   │   ├── AnonymizationPage.jsx    # Interface d’anonymisation des fichiers
+│   │   └── index.css                # Styles globaux (custom + Tailwind)
+│   ├── index.html                   # Template HTML Vite
+│   ├── vite.config.js               # Configuration Vite.js
+│   ├── tailwind.config.cjs          # Configuration Tailwind CSS
+│   ├── postcss.config.cjs           # Config PostCSS
+│   ├── package.json                 # Dépendances frontend
+│   └── README.md                    # Explication du frontend
+│
+├── .gitignore                       # Fichiers/dossiers ignorés par Git
+├── README.md                        # README global
+
 ```
 
 ## Installation
