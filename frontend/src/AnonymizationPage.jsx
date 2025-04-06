@@ -108,22 +108,30 @@ function AnonymizationPage() {
   return (
     <>
       <Header onBenchmarkClick={() => setIsModalOpen(true)} />
-
+      <section className="text-center pt-20 px-6 md:px-0">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+          <span className="text-primary">Anonym</span>iser vos données
+        </h1>
+        <p className="max-w-2xl mx-auto text-lg mb-10">
+        Importez votre fichier CSV et appliquez automatiquement les techniques d’anonymisation adaptées à chaque type de donnée.
+        </p>
+      </section>
       <div className="p-6 max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Plateforme d'Anonymisation</h1>
-
-        <input type="file" accept=".csv" onChange={handleFileUpload} className="mb-6" />
-
+      <input
+        type="file"
+        accept=".csv"
+        onChange={handleFileUpload}
+      />
         {columns.length > 0 && (
-          <div className="space-y-4">
+          <div className="grid md:grid-cols-2 gap-2 max-w-6xl mx-auto px-2">
             {columns.map((col) => (
-              <div key={col} className="border rounded p-4">
+              <div key={col} className="select-div p-4">
                 <h3 className="font-semibold">{col}</h3>
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-2">
                   <select
                     value={columnTypes[col] || ""}
                     onChange={(e) => handleTypeChange(e, col)}
-                    className="border p-1 rounded"
+                    className="p-2"
                   >
                     <option value="">Sélectionner le type</option>
                     {Object.keys(typeToMethods).map((type) => (
@@ -137,7 +145,7 @@ function AnonymizationPage() {
                     <select
                       value={columnMethods[col] || ""}
                       onChange={(e) => handleMethodChange(e, col)}
-                      className="border p-1 rounded"
+                      className="p-2"
                     >
                       <option value="">Méthode à appliquer</option>
                       {typeToMethods[columnTypes[col]].map((method) => (
@@ -152,24 +160,24 @@ function AnonymizationPage() {
             ))}
           </div>
         )}
-
-        <button
-          onClick={handleAnonymization}
-          disabled={loading}
-          className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          {loading ? "Traitement en cours..." : "Lancer l'anonymisation"}
-        </button>
-
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={handleAnonymization}
+            disabled={loading}
+            className="mt-2 px-4 py-2 w-60"
+          >
+            {loading ? "Traitement en cours..." : "Anonimiser les données"}
+          </button>
+        </div>
         {error && <p className="text-red-500 mt-4">{error}</p>}
 
         {anonymizedData && (
-          <div className="mt-6">
+          <div className="flex justify-center">
             <button
               onClick={downloadCSV}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              className="px-4 py-2 w-60"
             >
-              Télécharger le fichier anonymisé
+              Télécharger
             </button>
           </div>
         )}
