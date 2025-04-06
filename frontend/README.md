@@ -1,12 +1,91 @@
-# React + Vite
+```markdown
+# TraceLess Platform – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface web du projet **TraceLess Platform**, une application de démonstration pour l’anonymisation de jeux de données personnels, conforme au RGPD.  
+Elle permet d’uploader un fichier `.csv`, de définir des types de colonnes, et d’appliquer différentes techniques d’anonymisation.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Fonctionnalités
 
-## Expanding the ESLint configuration
+- 🔐 Anonymisation des données avec masquage, pseudonymisation, généralisation, perturbation, agrégation.
+- 📊 Visualisation des benchmarks de performance sur des datasets de différentes tailles.
+- 📁 Import facile de fichiers CSV.
+- 🎨 Interface responsive et sombre avec design personnalisé (Tailwind CSS + custom CSS).
+- ✅ Routing SPA avec React Router.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🧰 Technologies
+
+- [React](https://reactjs.org/)
+- [React Router](https://reactrouter.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Tabler Icons](https://tabler-icons.io/)
+- HTML5 / CSS3 (custom theme + dark mode)
+
+---
+
+## 📂 Structure
+
+```
+📁 frontend/
+├── public/
+│   │── images/
+│   └── fonts/
+├── src/
+│   ├── components/
+│   │   ├── Header.jsx
+│   │   ├── Footer.jsx
+│   │   └── BenchmarkModal.jsx
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── WelcomePage.jsx
+│   ├── AnonymizationPage.jsx
+│   └── index.css
+└── README.md
+```
+
+---
+
+## ▶️ Lancer l'application
+
+### 1. Prérequis
+- Node.js ≥ 18.x
+- npm ≥ 9.x
+
+### 2. Installation
+
+```bash
+cd frontend
+npm install
+```
+
+### 3. Démarrage en local
+
+```bash
+npm run dev
+```
+
+L’application sera disponible à l'adresse : [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 📦 Scripts utiles
+
+| Commande           | Description                   |
+|--------------------|-------------------------------|
+| `npm run dev`      | Lancer le serveur de dev      |
+| `npm run build`    | Build de production           |
+| `npm run preview`  | Preview du build              |
+
+---
+
+## 📸 Aperçu
+
+![screenshot](https://i.postimg.cc/PqC76532/Screenshot-2025-04-06-084829.png)
+![screenshot](https://i.postimg.cc/NjJV7H4K/Screenshot-2025-04-06-084813.png)
+![screenshot](https://i.postimg.cc/zGX6gjnm/Screenshot-2025-04-06-084820.png)
+![screenshot](https://i.postimg.cc/qMGWqY6X/Screenshot-2025-04-06-084858.png)
+
+---
