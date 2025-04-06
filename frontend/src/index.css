@@ -1,16 +1,83 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #86b925;
+  --secondary-color: #5e8515;
+  --bg-dark: #121212;
+  --bg-light: #f5f5f5;
+  --text-light: #ffffff;
+  --text-light-2: #e6e6e6;
 }
 
+@font-face {
+  font-family: 'FirsNeue';
+  src: url('/fonts/TT Firs Neue Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FirsNeue';
+  src: url('/fonts/TT Firs Neue Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'FirsNeue';
+  src: url('/fonts/TT Firs Neue Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FirsNeue';
+  src: url('/fonts/TT Firs Neue Bold Italic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'FirsNeue';
+  src: url('/fonts/TT Firs Neue Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FirsNeue';
+  src: url('/fonts/TT Firs Neue Light Italic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'FirsNeue';
+  src: url('/fonts/TT Firs Neue Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FirsNeue';
+  src: url('/fonts/TT Firs Neue Thin Italic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+
+
+body {
+  font-family: 'FirsNeue';
+  background-color: var(--bg-dark);
+}
+
+main{
+  background-color: var(--bg-dark);
+}
 .container {
-  background: white;
+  background: var(--bg-light);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -19,10 +86,13 @@ body {
 }
 
 h1 {
-  color: #333;
+  color: #FFFFFF;
   margin-bottom: 20px;
 }
 
+p{
+  color: var(--text-light-2);
+}
 input[type="file"] {
   display: block;
   margin: 10px auto;
@@ -38,26 +108,46 @@ button {
   padding: 10px;
   margin: 10px 0;
   border: none;
-  border-radius: 5px;
+  border-radius: 25px;
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s;
+  font-weight: bold;
 }
 
 button:nth-of-type(1) {
-  background: #007bff;
+  background: transparent;
   color: white;
+  border-radius: 25px;
+  border: solid 2px var(--primary-color);
+  font-weight: bold;
 }
 
 button:nth-of-type(1):hover {
-  background: #0056b3;
+  background: var(--primary-color);
 }
 
 button:nth-of-type(2) {
-  background: #28a745;
+  background: var(--secondary-color);
   color: white;
 }
 
 button:nth-of-type(2):hover {
-  background: #1e7e34;
+  background: var(--secondary-color);
+}
+
+.text-primary{
+  color: var(--primary-color);
+}
+
+.text-secondary{
+  color: var(--primary-color);
+}
+
+h3{
+  color: var(--primary-color);
+}
+
+.header-icon{
+  height: 45px;
 }
