@@ -83,10 +83,10 @@ L’application sera disponible à l'adresse : [http://localhost:5173](http://lo
 ## 📸 Aperçu
 
 <p align="center">
-  <img src="https://i.postimg.cc/PqC76532/Screenshot-2025-04-06-084829.png" alt="Screenshot 1" style="max-height: 200px; margin: 10px;" />
-  <img src="https://i.postimg.cc/NjJV7H4K/Screenshot-2025-04-06-084813.png" alt="Screenshot 2" style="max-height: 200px; margin: 10px;" />
-  <img src="https://i.postimg.cc/zGX6gjnm/Screenshot-2025-04-06-084820.png" alt="Screenshot 3" style="max-height: 200px; margin: 10px;" />
-  <img src="https://i.postimg.cc/qMGWqY6X/Screenshot-2025-04-06-084858.png" alt="Screenshot 4" style="max-height: 200px; margin: 10px;" />
+  <img src="https://i.postimg.cc/PqC76532/Screenshot-2025-04-06-084829.png" alt="Screenshot 1" style="height: 200px; margin: 10px;" />
+  <img src="https://i.postimg.cc/NjJV7H4K/Screenshot-2025-04-06-084813.png" alt="Screenshot 2" style="height: 200px; margin: 10px;" />
+  <img src="https://i.postimg.cc/zGX6gjnm/Screenshot-2025-04-06-084820.png" alt="Screenshot 3" style="height: 200px; margin: 10px;" />
+  <img src="https://i.postimg.cc/qMGWqY6X/Screenshot-2025-04-06-084858.png" alt="Screenshot 4" style="height: 200px; margin: 10px;" />
 </p>
 
 ---
