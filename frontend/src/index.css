@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: #86b925;
+  --primary-color: rgb(150, 202, 52);
   --secondary-color: #5e8515;
   --bg-dark: #121212;
   --bg-light: #f5f5f5;
@@ -113,9 +113,6 @@ button {
   cursor: pointer;
   transition: background 0.3s;
   font-weight: bold;
-}
-
-button:nth-of-type(1) {
   background: transparent;
   color: white;
   border-radius: 25px;
@@ -123,17 +120,8 @@ button:nth-of-type(1) {
   font-weight: bold;
 }
 
-button:nth-of-type(1):hover {
+button:hover {
   background: var(--primary-color);
-}
-
-button:nth-of-type(2) {
-  background: var(--secondary-color);
-  color: white;
-}
-
-button:nth-of-type(2):hover {
-  background: var(--secondary-color);
 }
 
 .text-primary{
@@ -148,6 +136,67 @@ h3{
   color: var(--primary-color);
 }
 
-.header-icon{
+.header-logo-container{
+  display: flex;
   height: 45px;
+}
+
+.header-logo-container img {
+  height: 100%;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
+footer{
+  color: var(--text-light-2);
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+.modal-overlay.fade-out {
+  animation: fadeOut 0.3s forwards;
+}
+
+.modal-content {
+  background-color: #18181d;
+  color: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 32rem;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s forwards;
+}
+
+.modal-content.fade-out {
+  animation: fadeOut 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }

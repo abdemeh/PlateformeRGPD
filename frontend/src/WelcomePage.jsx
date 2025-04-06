@@ -1,17 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BenchmarkModal from "./components/BenchmarkModal"; // 👈 importe le modal
 
 export default function WelcomePage() {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <main className="min-h-screen text-white">
+    <main className="min-h-screen text-white relative">
       {/* Header */}
       <header className="flex items-center justify-between px-6 md:px-16 py-6 border-b border-gray-700">
-        <img className="header-icon" src="images/logo-main-2.png" alt="" />
-        <div className="space-x-4">
-          <button onClick={() => navigate("/anonymize")} className="bg-purple-500 hover:bg-purple-400 text-white px-4 py-2 rounded-lg font-medium">
-            Commencer
+        <div className="header-logo-container">
+          <img src="images/logo-main-2.png" alt="logo" />
+        </div>
+        <div className="space-x-4 flex">
+          <button onClick={() => navigate("/anonymize")} className="px-4 py-2">
+            Tester
+          </button>
+          <button onClick={() => setIsModalOpen(true)} className="px-4 py-2">
+            Benchmarking
+          </button>
+          <button
+            onClick={() =>
+              window.open("https://github.com/abdemeh/PlateformeRGPD", "_blank", "noopener,noreferrer")
+            }
+            className="px-4 py-2"
+          >
+            Github
           </button>
         </div>
       </header>
@@ -59,9 +74,15 @@ export default function WelcomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-700 py-6 text-center text-gray-500 text-sm">
-        &copy; {new Date().getFullYear()} TraceLess. Tous droits réservés.
+      <footer className="border-t border-gray-700 py-6 text-center text-sm">
+        <div className="flex justify-center items-center gap-2">
+          <img src="images/cytech.png" alt="Cytech Logo" className="h-[45px]" />
+          <span>&copy; {new Date().getFullYear()} TraceLess Platform. Tous droits réservés.</span>
+        </div>
       </footer>
+
+      {/* Benchmark Modal */}
+      {isModalOpen && <BenchmarkModal onClose={() => setIsModalOpen(false)} />}
     </main>
   );
 }
