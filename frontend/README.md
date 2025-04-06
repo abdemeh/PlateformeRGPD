@@ -1,4 +1,3 @@
-```markdown
 # TraceLess Platform – Frontend
 
 Interface web du projet **TraceLess Platform**, une application de démonstration pour l’anonymisation de jeux de données personnels, conforme au RGPD.  
